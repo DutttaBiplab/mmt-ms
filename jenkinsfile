@@ -1,21 +1,21 @@
 pipeline {
-
-  stages {
-  
-    stage (check java version) {
-	  steps {
-	    sh 'java --version'
-	  }
-	}
-    stage (check java version) {
-	  steps {
-	    sh 'java --version'
-	  }
+    options {
+        buildDiscrder (logRotator(numTokeepstr: '5', artifactNumTokeepstr: '5'))
     }
-	stage (check git) {
-	  steps {
-	    sh 'git --version'
-	  }
-	}
-  }
+    agent any
+
+    tools {
+        maven 'maven_3.9.4'
+    }
+
+    stage {
+        stage('code Compilation') {
+            steps {
+                echo 'code compilation is in progress!'
+                sh 'mvn clean compile'
+                echo 'code compile is complete successfully'
+            }
+        }
+    }
 }
+
